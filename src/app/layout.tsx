@@ -51,7 +51,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${ubuntu.variable} antialiased `}
       >
         {children}
-        {/*  <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
