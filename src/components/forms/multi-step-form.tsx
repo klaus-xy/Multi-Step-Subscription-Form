@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "../ui/button";
 import StepIndicator from "../step-indicator";
-import { Step } from "@/types/form";
+import { FormData, Step } from "@/types/form";
 import { useState } from "react";
 import PersonalInfo from "../personal-info";
 import PlanSelection from "../plan-selection";
@@ -36,8 +36,24 @@ const pageInfo = [
   },
 ];
 
+const INITIAL_FORM_DATA: FormData = {
+  name: "",
+  email: "",
+  phone: "",
+  plan: "arcade",
+  billingCycle: "monthly",
+  addons: {
+    onlineService: false,
+    largerStorage: false,
+    customizableProfile: false,
+  },
+};
+
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState<Step>(1);
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+
+  console.log(formData);
 
   const handleNext = () => {
     setCurrentStep((curr) => (curr >= 4 ? curr : curr + 1) as Step);
@@ -45,6 +61,11 @@ const MultiStepForm = () => {
   const handlePrev = () => {
     setCurrentStep((curr) => (curr <= 1 ? curr : curr - 1) as Step);
   };
+
+  const handleUpdateFormData = (data: Partial<FormData>) => {
+    setFormData((prev) => ({ ...prev, ...data }));
+  };
+
   return (
     <div className="min-h-screen w-full max-w-5xl flex flex-col p-4 bg-slate-400">
       {/* BLOCK 1 */}
@@ -57,7 +78,7 @@ const MultiStepForm = () => {
       {/* BLOCK 2 */}
       <div className="flex flex-col flex-1 bg-pink-300 relative">
         <div className="flex-1">
-          <Card className="min-h-[400px] w-[90%] mx-auto relative -top-[86px] ">
+          <Card className="min-h-[300px] w-[90%] mx-auto relative -top-[86px] ">
             <CardHeader>
               <CardTitle>{pageInfo[currentStep - 1].title}</CardTitle>
               <CardDescription>
@@ -66,7 +87,12 @@ const MultiStepForm = () => {
             </CardHeader>
             <CardContent>
               {/* Personal Info */}
-              {currentStep === 1 && <PersonalInfo />}
+              {currentStep === 1 && (
+                <PersonalInfo
+                  formData={formData}
+                  updateFormData={handleUpdateFormData}
+                />
+              )}
               {/* Plan Selection */}
               {currentStep === 2 && <PlanSelection />}
               {/* Add-ons */}
@@ -78,7 +104,7 @@ const MultiStepForm = () => {
           </Card>
         </div>
 
-        <div className="flex justify-between bg-red-300">
+        <div className="flex justify-between bg-red-300 mb-4 p-4">
           {currentStep !== 1 && <Button onClick={handlePrev}>Prev</Button>}
           <Button onClick={handleNext} className="ml-auto">
             Next
