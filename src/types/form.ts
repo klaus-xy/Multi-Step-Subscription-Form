@@ -1,5 +1,3 @@
-import { Type } from "lucide-react";
-
 export interface FormData {
   // Step 1: Personal
   // Step 2: Plan Selection

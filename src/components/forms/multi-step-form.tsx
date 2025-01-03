@@ -3,6 +3,38 @@ import { Button } from "../ui/button";
 import StepIndicator from "../step-indicator";
 import { Step } from "@/types/form";
 import { useState } from "react";
+import PersonalInfo from "../personal-info";
+import PlanSelection from "../plan-selection";
+import AddOns from "../add-ons";
+import Summary from "../summary";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+
+//zod resolver goes here
+
+const pageInfo = [
+  {
+    title: "Personal Info",
+    description: "Enter your personal information",
+  },
+  {
+    title: "Plan Selection",
+    description: "Select a plan that works for you",
+  },
+  {
+    title: "Add-ons",
+    description: "Select add-ons for your plan",
+  },
+  {
+    title: "Summary",
+    description: "Review your order",
+  },
+];
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState<Step>(1);
@@ -25,10 +57,27 @@ const MultiStepForm = () => {
       {/* BLOCK 2 */}
       <div className="flex flex-col flex-1 bg-pink-300 relative">
         <div className="flex-1">
-          <div className="min-h-[400px] w-[90%] mx-auto bg-emerald-400 relative -top-12 p-4">
-            Form Contents
-          </div>
+          <Card className="min-h-[400px] w-[90%] mx-auto relative -top-[86px] ">
+            <CardHeader>
+              <CardTitle>{pageInfo[currentStep - 1].title}</CardTitle>
+              <CardDescription>
+                {pageInfo[currentStep - 1].description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {/* Personal Info */}
+              {currentStep === 1 && <PersonalInfo />}
+              {/* Plan Selection */}
+              {currentStep === 2 && <PlanSelection />}
+              {/* Add-ons */}
+              {currentStep === 3 && <AddOns />}
+              {/* Summary */}
+              {currentStep === 4 && <Summary />}
+              {/* Thank you page */}
+            </CardContent>
+          </Card>
         </div>
+
         <div className="flex justify-between bg-red-300">
           {currentStep !== 1 && <Button onClick={handlePrev}>Prev</Button>}
           <Button onClick={handleNext} className="ml-auto">
