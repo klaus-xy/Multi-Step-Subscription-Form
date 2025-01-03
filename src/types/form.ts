@@ -10,6 +10,8 @@ export interface FormData {
 
   // Step 3: Add-ons
   addons: {
+    [key: string]: boolean;
+
     onlineService: boolean;
     largerStorage: boolean;
     customizableProfile: boolean;

@@ -101,7 +101,12 @@ const MultiStepForm = () => {
                 />
               )}
               {/* Add-ons */}
-              {currentStep === 3 && <AddOns />}
+              {currentStep === 3 && (
+                <AddOns
+                  formData={formData}
+                  updateFormData={handleUpdateFormData}
+                />
+              )}
               {/* Summary */}
               {currentStep === 4 && <Summary />}
               {/* Thank you page */}
