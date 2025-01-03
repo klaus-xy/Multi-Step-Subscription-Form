@@ -1,5 +1,4 @@
 import { FormData } from "@/types/form";
-import { Radio } from "lucide-react";
 import React from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "@radix-ui/react-label";
