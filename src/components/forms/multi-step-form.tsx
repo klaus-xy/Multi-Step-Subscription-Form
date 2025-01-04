@@ -32,7 +32,7 @@ const pageInfo = [
     description: "Select add-ons for your plan",
   },
   {
-    title: "Summary",
+    title: "Finishing Up",
     description: "Review your order",
   },
 ];
@@ -60,8 +60,13 @@ const MultiStepForm = () => {
   const handleNext = () => {
     setCurrentStep((curr) => (curr >= 4 ? curr : curr + 1) as Step);
   };
+
   const handlePrev = () => {
     setCurrentStep((curr) => (curr <= 1 ? curr : curr - 1) as Step);
+  };
+
+  const handleGoBack = (step: Step) => {
+    setCurrentStep(step);
   };
 
   const handleUpdateFormData = (data: Partial<FormData>) => {
@@ -116,7 +121,7 @@ const MultiStepForm = () => {
                     />
                   )}
                   {/* Summary */}
-                  {currentStep === 4 && <Summary />}
+                  {currentStep === 4 && <Summary formData={formData} />}
                   {/* Thank you page */}
                 </CardContent>
               </>
@@ -125,7 +130,13 @@ const MultiStepForm = () => {
         </div>
         {!isSubmitted && (
           <div className="flex justify-between bg-red-300 p-4 absolute bottom-0 w-full">
-            {currentStep !== 1 && <Button onClick={handlePrev}>Prev</Button>}
+            {currentStep !== 1 && currentStep !== 4 ? (
+              <Button onClick={handlePrev}>Prev</Button>
+            ) : (
+              currentStep !== 1 && (
+                <Button onClick={() => handleGoBack(2)}>Go Back</Button>
+              )
+            )}
             <Button onClick={handleNext} className="ml-auto">
               {currentStep === 4 ? "Confirm" : "Next"}
             </Button>
