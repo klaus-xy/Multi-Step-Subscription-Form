@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import Confirmation from "../confirmation";
 
 //zod resolver goes here
 
@@ -52,6 +53,7 @@ const INITIAL_FORM_DATA: FormData = {
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   console.log(formData);
 
@@ -79,47 +81,56 @@ const MultiStepForm = () => {
       <div className="flex flex-col flex-1 bg-pink-300 relative">
         <div className="flex-1">
           <Card className="min-h-[300px] w-[90%] mx-auto relative -top-[86px] ">
-            <CardHeader>
-              <CardTitle>{pageInfo[currentStep - 1].title}</CardTitle>
-              <CardDescription>
-                {pageInfo[currentStep - 1].description}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {/* Personal Info */}
-              {currentStep === 1 && (
-                <PersonalInfo
-                  formData={formData}
-                  updateFormData={handleUpdateFormData}
-                />
-              )}
-              {/* Plan Selection */}
-              {currentStep === 2 && (
-                <PlanSelection
-                  formData={formData}
-                  updateFormData={handleUpdateFormData}
-                />
-              )}
-              {/* Add-ons */}
-              {currentStep === 3 && (
-                <AddOns
-                  formData={formData}
-                  updateFormData={handleUpdateFormData}
-                />
-              )}
-              {/* Summary */}
-              {currentStep === 4 && <Summary />}
-              {/* Thank you page */}
-            </CardContent>
+            {isSubmitted ? (
+              <CardContent>
+                <Confirmation />
+              </CardContent>
+            ) : (
+              <>
+                <CardHeader>
+                  <CardTitle>{pageInfo[currentStep - 1].title}</CardTitle>
+                  <CardDescription>
+                    {pageInfo[currentStep - 1].description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {/* Personal Info */}
+                  {currentStep === 1 && (
+                    <PersonalInfo
+                      formData={formData}
+                      updateFormData={handleUpdateFormData}
+                    />
+                  )}
+                  {/* Plan Selection */}
+                  {currentStep === 2 && (
+                    <PlanSelection
+                      formData={formData}
+                      updateFormData={handleUpdateFormData}
+                    />
+                  )}
+                  {/* Add-ons */}
+                  {currentStep === 3 && (
+                    <AddOns
+                      formData={formData}
+                      updateFormData={handleUpdateFormData}
+                    />
+                  )}
+                  {/* Summary */}
+                  {currentStep === 4 && <Summary />}
+                  {/* Thank you page */}
+                </CardContent>
+              </>
+            )}
           </Card>
         </div>
-
-        <div className="flex justify-between bg-red-300 p-4 absolute bottom-0 w-full">
-          {currentStep !== 1 && <Button onClick={handlePrev}>Prev</Button>}
-          <Button onClick={handleNext} className="ml-auto">
-            Next
-          </Button>
-        </div>
+        {!isSubmitted && (
+          <div className="flex justify-between bg-red-300 p-4 absolute bottom-0 w-full">
+            {currentStep !== 1 && <Button onClick={handlePrev}>Prev</Button>}
+            <Button onClick={handleNext} className="ml-auto">
+              {currentStep === 4 ? "Confirm" : "Next"}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
