@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "../ui/button";
 import StepIndicator from "../step-indicator";
-import { FormData, Step } from "@/types/form";
+import { FormData, Step, ValidationErrors } from "@/types/form";
 import { useState } from "react";
 import PersonalInfo from "../personal-info";
 import PlanSelection from "../plan-selection";
@@ -16,24 +16,22 @@ import {
 } from "../ui/card";
 import Confirmation from "../confirmation";
 
-//zod resolver goes here
-
 const pageInfo = [
   {
     title: "Personal Info",
-    description: "Enter your personal information",
+    description: "Please provide your name, email address, and phone number.",
   },
   {
     title: "Plan Selection",
-    description: "Select a plan that works for you",
+    description: "You have the option of monthly or yearly billing.",
   },
   {
     title: "Add-ons",
-    description: "Select add-ons for your plan",
+    description: "Add-ons help enhance your gaming experience.",
   },
   {
     title: "Finishing Up",
-    description: "Review your order",
+    description: "Double-check everything looks OK before confirming.",
   },
 ];
 
@@ -54,11 +52,31 @@ const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
+    {}
+  );
 
-  console.log(formData);
-  console.log(currentStep);
+  const validatePersonalInfo = (data: FormData) => {
+    const errors: ValidationErrors = {};
+    if (!data.name.trim()) errors.name = "This field is required";
+    if (!data.email.trim()) errors.email = "This field is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
+      errors.email = "Please enter a valid email address";
+    if (!data.phone.trim()) errors.phone = "This field is required";
+    else if (!/^\+?[1-9]\d{1,14}$/.test(data.phone))
+      errors.phone = "Please enter a valid phone number";
+    return errors;
+  };
 
   const handleNext = () => {
+    if (currentStep === 1) {
+      const errors = validatePersonalInfo(formData);
+      if (Object.keys(errors).length > 0) {
+        setValidationErrors(errors);
+        return;
+      }
+    }
+    setValidationErrors({});
     setCurrentStep((curr) => (curr >= 4 ? curr : curr + 1) as Step);
   };
 
@@ -77,29 +95,27 @@ const MultiStepForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (currentStep === 4) {
-      //submit the form
       setIsSubmitted(true);
       console.log("Form Submitted");
       return;
     }
     handleNext();
   };
+
   return (
-    <div className="min-h-screen w-full max-w-5xl flex flex-col p-4 bg-slate-400">
-      {/* BLOCK 1 */}
+    <div className="min-h-screen w-full max-w-xl flex flex-col p-0 bg-slate-400">
       <div className="min-h-52 bg-violet-300 bg-[url(/images/bg-sidebar-mobile.svg)] bg-cover bg-center flex items-start justify-center">
         <div className="mt-8">
           <StepIndicator currentStep={currentStep} />
         </div>
       </div>
 
-      {/* BLOCK 2 */}
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col flex-1 bg-pink-300 relative"
+        className="flex flex-col flex-1 bg-magnolia relative"
       >
         <div className="flex-1">
-          <Card className="min-h-[300px] w-[90%] mx-auto relative -top-[86px] ">
+          <Card className="min-h-[300px] w-[90%] mx-auto relative -top-[86px] p-3">
             {isSubmitted ? (
               <CardContent>
                 <Confirmation />
@@ -107,54 +123,52 @@ const MultiStepForm = () => {
             ) : (
               <>
                 <CardHeader>
-                  <CardTitle>{pageInfo[currentStep - 1].title}</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-2xl text-marine-blue">
+                    {pageInfo[currentStep - 1].title}
+                  </CardTitle>
+                  <CardDescription className="text-base text-cool-gray">
                     {pageInfo[currentStep - 1].description}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {/* Personal Info */}
                   {currentStep === 1 && (
                     <PersonalInfo
                       formData={formData}
                       updateFormData={handleUpdateFormData}
+                      validationErrors={validationErrors}
                     />
                   )}
-                  {/* Plan Selection */}
                   {currentStep === 2 && (
                     <PlanSelection
                       formData={formData}
                       updateFormData={handleUpdateFormData}
                     />
                   )}
-                  {/* Add-ons */}
                   {currentStep === 3 && (
                     <AddOns
                       formData={formData}
                       updateFormData={handleUpdateFormData}
                     />
                   )}
-                  {/* Summary */}
                   {currentStep === 4 && <Summary formData={formData} />}
-                  {/* Thank you page */}
                 </CardContent>
               </>
             )}
           </Card>
         </div>
         {!isSubmitted && (
-          <div className="flex justify-between bg-red-300 p-4 absolute bottom-0 w-full">
+          <div className="flex justify-between bg-light-gray p-6 absolute bottom-0 w-full">
             {currentStep !== 1 && currentStep !== 4 ? (
-              <Button type={"button"} onClick={handlePrev}>
-                Prev
+              <Button type="button" onClick={handlePrev}>
+                Go Back
               </Button>
             ) : (
               currentStep !== 1 && (
                 <Button onClick={() => handleGoBack(2)}>Go Back</Button>
               )
             )}
-            <Button type={"submit"} className="ml-auto">
-              {currentStep === 4 ? "Confirm" : "Next"}
+            <Button type="submit" className="ml-auto">
+              {currentStep === 4 ? "Confirm" : "Next Step"}
             </Button>
           </div>
         )}

@@ -17,4 +17,10 @@ export interface FormData {
   };
 }
 
+export interface ValidationErrors {
+  name?: string;
+  email?: string;
+  phone?: string;
+}
+
 export type Step = 1 | 2 | 3 | 4;
