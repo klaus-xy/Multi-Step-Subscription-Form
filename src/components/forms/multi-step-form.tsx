@@ -15,6 +15,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import Confirmation from "../confirmation";
+import { Form } from "../ui/form";
 
 //zod resolver goes here
 
@@ -56,6 +57,7 @@ const MultiStepForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   console.log(formData);
+  console.log(currentStep);
 
   const handleNext = () => {
     setCurrentStep((curr) => (curr >= 4 ? curr : curr + 1) as Step);
@@ -73,6 +75,16 @@ const MultiStepForm = () => {
     setFormData((prev) => ({ ...prev, ...data }));
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (currentStep === 4) {
+      //submit the form
+      setIsSubmitted(true);
+      console.log("Form Submitted");
+      return;
+    }
+    handleNext();
+  };
   return (
     <div className="min-h-screen w-full max-w-5xl flex flex-col p-4 bg-slate-400">
       {/* BLOCK 1 */}
@@ -83,7 +95,10 @@ const MultiStepForm = () => {
       </div>
 
       {/* BLOCK 2 */}
-      <div className="flex flex-col flex-1 bg-pink-300 relative">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col flex-1 bg-pink-300 relative"
+      >
         <div className="flex-1">
           <Card className="min-h-[300px] w-[90%] mx-auto relative -top-[86px] ">
             {isSubmitted ? (
@@ -131,18 +146,20 @@ const MultiStepForm = () => {
         {!isSubmitted && (
           <div className="flex justify-between bg-red-300 p-4 absolute bottom-0 w-full">
             {currentStep !== 1 && currentStep !== 4 ? (
-              <Button onClick={handlePrev}>Prev</Button>
+              <Button type={"button"} onClick={handlePrev}>
+                Prev
+              </Button>
             ) : (
               currentStep !== 1 && (
                 <Button onClick={() => handleGoBack(2)}>Go Back</Button>
               )
             )}
-            <Button onClick={handleNext} className="ml-auto">
+            <Button type={"submit"} className="ml-auto">
               {currentStep === 4 ? "Confirm" : "Next"}
             </Button>
           </div>
         )}
-      </div>
+      </form>
     </div>
   );
 };
