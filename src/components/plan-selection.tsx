@@ -1,7 +1,6 @@
 import { FormData } from "@/types/form";
 import React from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import IconPro from "/images/icon-pro.svg";
 
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";

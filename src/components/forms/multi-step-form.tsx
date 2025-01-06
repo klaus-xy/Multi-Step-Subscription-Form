@@ -84,9 +84,9 @@ const MultiStepForm = () => {
     setCurrentStep((curr) => (curr <= 1 ? curr : curr - 1) as Step);
   };
 
-  const handleGoBack = (step: Step) => {
-    setCurrentStep(step);
-  };
+  // const handleGoBack = (step: Step) => {
+  //   setCurrentStep(step);
+  // };
 
   const handleUpdateFormData = (data: Partial<FormData>) => {
     setFormData((prev) => ({ ...prev, ...data }));
