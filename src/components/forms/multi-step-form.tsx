@@ -104,7 +104,7 @@ const MultiStepForm = () => {
 
   return (
     <div className="min-h-screen w-full max-w-xl flex flex-col p-0 bg-slate-400">
-      <div className="min-h-52 bg-violet-300 bg-[url(/images/bg-sidebar-mobile.svg)] bg-cover bg-center flex items-start justify-center">
+      <div className="min-h-52 bg-violet-400 bg-[url(/images/bg-sidebar-mobile.svg)] bg-cover bg-center flex items-start justify-center">
         <div className="mt-8">
           <StepIndicator currentStep={currentStep} />
         </div>
@@ -115,7 +115,7 @@ const MultiStepForm = () => {
         className="flex flex-col flex-1 bg-magnolia relative"
       >
         <div className="flex-1">
-          <Card className="min-h-[300px] w-[90%] mx-auto relative -top-[86px] p-3">
+          <Card className="min-h-[300px] w-[90%] mx-auto relative -top-[88px] p-3">
             {isSubmitted ? (
               <CardContent>
                 <Confirmation />
@@ -123,7 +123,7 @@ const MultiStepForm = () => {
             ) : (
               <>
                 <CardHeader>
-                  <CardTitle className="text-2xl text-marine-blue">
+                  <CardTitle className="text-2xl">
                     {pageInfo[currentStep - 1].title}
                   </CardTitle>
                   <CardDescription className="text-base text-cool-gray">
@@ -150,22 +150,20 @@ const MultiStepForm = () => {
                       updateFormData={handleUpdateFormData}
                     />
                   )}
-                  {currentStep === 4 && <Summary formData={formData} />}
+                  {currentStep === 4 && (
+                    <Summary formData={formData} onGoBack={setCurrentStep} />
+                  )}
                 </CardContent>
               </>
             )}
           </Card>
         </div>
         {!isSubmitted && (
-          <div className="flex justify-between bg-light-gray p-6 absolute bottom-0 w-full">
-            {currentStep !== 1 && currentStep !== 4 ? (
+          <div className="flex justify-between bg-white p-6 absolute bottom-0 w-full">
+            {currentStep !== 1 && (
               <Button type="button" onClick={handlePrev}>
                 Go Back
               </Button>
-            ) : (
-              currentStep !== 1 && (
-                <Button onClick={() => handleGoBack(2)}>Go Back</Button>
-              )
             )}
             <Button type="submit" className="ml-auto">
               {currentStep === 4 ? "Confirm" : "Next Step"}

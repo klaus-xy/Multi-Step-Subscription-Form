@@ -1,10 +1,13 @@
-import { FormData } from "@/types/form";
+import { FormData, Step } from "@/types/form";
 import { Separator } from "./ui/separator";
+
+import { Button } from "./ui/button";
 
 interface SummaryProps {
   formData: FormData;
+  onGoBack: (step: Step) => void;
 }
-const Summary = ({ formData }: SummaryProps) => {
+const Summary = ({ formData, onGoBack }: SummaryProps) => {
   const planPrices = {
     arcade: formData.billingCycle === "monthly" ? 9 : 90,
     advanced: formData.billingCycle === "monthly" ? 12 : 120,
@@ -34,6 +37,7 @@ const Summary = ({ formData }: SummaryProps) => {
       <div className="bg-gray-100 p-4">
         <div>
           {formData.plan} {formData.billingCycle} {planPrice}
+          <Button onClick={() => onGoBack(2)}>Change</Button>
         </div>
         <Separator />
         <div>

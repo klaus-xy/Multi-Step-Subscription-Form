@@ -12,8 +12,10 @@ const StepIndicator = ({ currentStep }: StepIndicatorProps) => {
       {steps.map((step, index) => (
         <div
           key={index}
-          className={`w-8 h-8 flex justify-center items-center border-[1px] border-separate rounded-full text-base font-bold ${
-            currentStep === step ? "bg-magnolia text-marine-blue font-bold" : ""
+          className={`w-9 h-9 flex justify-center items-center border-[1px] border-separate rounded-full text-base font-bold ${
+            currentStep === step
+              ? "bg-light-blue text-marine-blue font-bold"
+              : ""
           }`}
         >
           {step}

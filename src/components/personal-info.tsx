@@ -47,7 +47,7 @@ const PersonalInfo = ({
         <Label htmlFor="name" className="flex justify-between items-center">
           Name
           {validationErrors.name && touched.name && (
-            <span className="text-strawberry-red text-sm">
+            <span className="text-destructive text-sm">
               {validationErrors.name}
             </span>
           )}
@@ -60,7 +60,7 @@ const PersonalInfo = ({
           onBlur={() => handleBlur("name")}
           placeholder="e.g. Klaus Mikaelson"
           className={
-            validationErrors.name && touched.name ? "border-strawberry-red" : ""
+            validationErrors.name && touched.name ? "border-destructive" : ""
           }
         />
       </div>

@@ -1,8 +1,11 @@
 import { FormData } from "@/types/form";
 import React from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Label } from "@radix-ui/react-label";
+import IconPro from "/images/icon-pro.svg";
+
 import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
+import Image from "next/image";
 
 interface PlanSelectionProps {
   formData: FormData;
@@ -14,20 +17,20 @@ const PlanSelection = ({ formData, updateFormData }: PlanSelectionProps) => {
     {
       id: "arcade",
       name: "Arcade",
-      price: formData.billingCycle === "monthly" ? 9.99 : 99.99,
-      icon: "🕹️",
+      price: formData.billingCycle === "monthly" ? 9 : 90,
+      icon: "/images/icon-arcade.svg",
     },
     {
       id: "advanced",
       name: "Advanced",
-      price: formData.billingCycle === "monthly" ? 19.99 : 199.99,
-      icon: "🚀",
+      price: formData.billingCycle === "monthly" ? 12 : 120,
+      icon: "/images/icon-advanced.svg",
     },
     {
       id: "pro",
       name: "Pro",
-      price: formData.billingCycle === "monthly" ? 29.99 : 299.99,
-      icon: "🔥",
+      price: formData.billingCycle === "monthly" ? 15 : 150,
+      icon: "/images/icon-pro.svg",
     },
   ];
 
@@ -44,16 +47,24 @@ const PlanSelection = ({ formData, updateFormData }: PlanSelectionProps) => {
             <RadioGroupItem value={plan.id} id={plan.id} className="sr-only" />
             <Label
               htmlFor={plan.id}
-              className={`flex items-center gap-4 border border-gray-300 p-4 rounded-lg ${
-                formData.plan === plan.id ? "bg-emerald-200" : ""
+              className={`flex items-start gap-4 border  p-4 rounded-lg ${
+                formData.plan === plan.id
+                  ? "bg-magnolia border-purplish-blue"
+                  : "bg-white border-gray-300"
               }`}
             >
-              <div>{plan.icon}</div>
-              <div className="flex flex-col">
-                <div>{plan.name}</div>
-                <div>
-                  ${plan.price}/
-                  {formData.billingCycle === "monthly" ? "mo" : "yr"}
+              <Image src={plan.icon} alt="plan-image" width={40} height={40} />
+              <div className="">
+                <span className="text-lg">{plan.name}</span>
+
+                <div className="flex flex-col gap-2 text-cool-gray mt-1">
+                  <span>
+                    ${plan.price}/
+                    {formData.billingCycle === "monthly" ? "mo" : "yr"}
+                  </span>
+                  {formData.billingCycle === "yearly" && (
+                    <span className="text-marine-blue">2 months free</span>
+                  )}
                 </div>
               </div>
             </Label>
@@ -63,8 +74,8 @@ const PlanSelection = ({ formData, updateFormData }: PlanSelectionProps) => {
 
       <div className="flex items-center justify-center gap-6">
         <span
-          className={`${
-            formData.billingCycle === "monthly" ? "font-medium" : ""
+          className={`font-medium ${
+            formData.billingCycle === "monthly" ? "" : "text-cool-gray"
           }`}
         >
           Monthly
@@ -76,8 +87,8 @@ const PlanSelection = ({ formData, updateFormData }: PlanSelectionProps) => {
           }
         />
         <span
-          className={`${
-            formData.billingCycle === "yearly" ? "font-medium" : ""
+          className={`font-medium ${
+            formData.billingCycle === "yearly" ? "" : "text-cool-gray"
           }`}
         >
           Yearly
