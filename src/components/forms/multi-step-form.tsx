@@ -26,7 +26,7 @@ const pageInfo = [
     description: "You have the option of monthly or yearly billing.",
   },
   {
-    title: "Add-ons",
+    title: "Pick add-ons",
     description: "Add-ons help enhance your gaming experience.",
   },
   {
@@ -55,7 +55,7 @@ const MultiStepForm = () => {
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
     {}
   );
-
+  console.log(formData);
   const validatePersonalInfo = (data: FormData) => {
     const errors: ValidationErrors = {};
     if (!data.name.trim()) errors.name = "This field is required";
@@ -115,7 +115,7 @@ const MultiStepForm = () => {
         className="flex flex-col flex-1 bg-magnolia relative"
       >
         <div className="flex-1">
-          <Card className="min-h-[300px] w-[90%] mx-auto relative -top-[88px] p-3">
+          <Card className="min-h-[300px] w-[92%] mx-auto relative -top-[88px] py-2">
             {isSubmitted ? (
               <CardContent>
                 <Confirmation />
@@ -161,11 +161,22 @@ const MultiStepForm = () => {
         {!isSubmitted && (
           <div className="flex justify-between bg-white p-6 absolute bottom-0 w-full">
             {currentStep !== 1 && (
-              <Button type="button" onClick={handlePrev}>
+              <Button
+                type="button"
+                variant={"ghost"}
+                onClick={handlePrev}
+                className="text-cool-gray"
+              >
                 Go Back
               </Button>
             )}
-            <Button type="submit" className="ml-auto">
+            <Button
+              type="submit"
+              size={"lg"}
+              className={`ml-auto ${
+                currentStep === 4 ? "bg-purplish-blue" : ""
+              }`}
+            >
               {currentStep === 4 ? "Confirm" : "Next Step"}
             </Button>
           </div>

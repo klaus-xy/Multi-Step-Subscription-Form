@@ -13,19 +13,19 @@ const AddOns = ({ formData, updateFormData }: AddOnsProps) => {
     {
       id: "onlineService",
       name: "Online Service",
-      description: "Get access to our online service",
+      description: "Access to multiplayer games",
       price: formData.billingCycle === "monthly" ? 1 : 10,
     },
     {
       id: "largerStorage",
       name: "Larger Storage",
-      description: "Get additional storage space",
+      description: "Extra 1TB of cloud save",
       price: formData.billingCycle === "monthly" ? 2 : 20,
     },
     {
       id: "customizableProfile",
       name: "Customizable Profile",
-      description: "Customize your profile",
+      description: "Custom theme on your profile",
       price: formData.billingCycle === "monthly" ? 2 : 20,
     },
   ];
@@ -33,8 +33,16 @@ const AddOns = ({ formData, updateFormData }: AddOnsProps) => {
   return (
     <div className="flex flex-col gap-4">
       {addOns.map((addOn) => (
-        <div key={addOn.id} className="flex items-center gap-4 border p-4">
+        <div
+          key={addOn.id}
+          className={`flex items-center gap-4 border p-3 rounded-lg ${
+            formData.addons[addOn.id]
+              ? "bg-magnolia border-marine-blue"
+              : "bg-white border-gray-300"
+          }`}
+        >
           <Checkbox
+            className={`w-5 h-5 border-cool-gray data-[state=checked]:bg-purplish-blue data-[state=checked]:border-purplish-blue`}
             id={addOn.id}
             checked={formData.addons[addOn.id]}
             onCheckedChange={(checked) =>
@@ -45,13 +53,18 @@ const AddOns = ({ formData, updateFormData }: AddOnsProps) => {
           />
           <Label
             htmlFor={addOn.id}
-            className="flex items-center justify-between w-full"
+            className="flex items-center justify-between w-full "
           >
             <div>
-              <h3>{addOn.name}</h3>
-              <p>{addOn.description}</p>
+              <h3 className="text-base font-semibold">{addOn.name}</h3>
+              <p className="text-cool-gray text-sm font-normal">
+                {addOn.description}
+              </p>
             </div>
-            <div>+${addOn.price}</div>
+            <div className="text-purplish-blue">
+              +${addOn.price}/
+              {formData.billingCycle === "monthly" ? "mo" : "yr"}
+            </div>
           </Label>
         </div>
       ))}

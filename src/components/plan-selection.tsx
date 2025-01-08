@@ -71,7 +71,7 @@ const PlanSelection = ({ formData, updateFormData }: PlanSelectionProps) => {
         ))}
       </RadioGroup>
 
-      <div className="flex items-center justify-center gap-6">
+      <div className="flex items-center justify-center gap-6 mt-4 p-4 rounded bg-magnolia">
         <span
           className={`font-medium ${
             formData.billingCycle === "monthly" ? "" : "text-cool-gray"

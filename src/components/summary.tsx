@@ -34,21 +34,56 @@ const Summary = ({ formData, onGoBack }: SummaryProps) => {
 
   return (
     <div>
-      <div className="bg-gray-100 p-4">
-        <div>
-          {formData.plan} {formData.billingCycle} {planPrice}
-          <Button onClick={() => onGoBack(2)}>Change</Button>
+      <div className="bg-gray-100 p-4 rounded-md">
+        {/* SELECTED PLAN */}
+        <div className="flex justify-between items-center mb-3">
+          <div className="flex flex-col justify-center">
+            <h3 className="capitalize font-semibold ">
+              {formData.plan} ({formData.billingCycle})
+            </h3>
+            <span
+              onClick={() => onGoBack(2)}
+              className="text-cool-gray underline hover:cursor-pointer hover:text-marine-blue"
+            >
+              Change
+            </span>
+          </div>
+
+          <span className="font-semibold">
+            ${planPrice}/{formData.billingCycle === "monthly" ? "mo" : "yr"}
+          </span>
         </div>
+
         <Separator />
-        <div>
+
+        <div className="mt-4">
           {selectedAddons.map((addOn) => (
-            <div key={addOn}>
-              {addOn} {addonPrices[addOn as keyof typeof addonPrices]}
+            <div
+              key={addOn}
+              className="flex justify-between items-center text-cool-gray mb-2 "
+            >
+              <span className="capitalize">
+                {addOn === "onlineService"
+                  ? "Larger Storage"
+                  : addOn === "largerStorage"
+                  ? "Online Service"
+                  : "Customizable Profile"}
+              </span>
+              <span className="text-marine-blue">
+                ${addonPrices[addOn as keyof typeof addonPrices]}/
+                {formData.billingCycle === "monthly" ? "mo" : "yr"}
+              </span>
             </div>
           ))}
         </div>
       </div>
-      <div>Total:{total}</div>
+      {/* TOTAL */}
+      <div className="flex justify-between items-center text-cool-gray mt-6 ">
+        Total (per {formData.billingCycle === "monthly" ? "month" : "year"}){" "}
+        <span className="font-bold text-lg text-purplish-blue">
+          +${total}/{formData.billingCycle === "monthly" ? "mo" : "yr"}
+        </span>
+      </div>
     </div>
   );
 };
