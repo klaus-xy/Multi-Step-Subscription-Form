@@ -1,8 +1,6 @@
 import { FormData, Step } from "@/types/form";
 import { Separator } from "./ui/separator";
 
-import { Button } from "./ui/button";
-
 interface SummaryProps {
   formData: FormData;
   onGoBack: (step: Step) => void;
