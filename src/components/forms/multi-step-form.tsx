@@ -103,9 +103,9 @@ const MultiStepForm = () => {
   };
 
   return (
-    <div className="min-h-screen w-full max-w-xl flex flex-col p-0 bg-slate-400">
-      <div className="min-h-52 bg-violet-400 bg-[url(/images/bg-sidebar-mobile.svg)] bg-cover bg-center flex items-start justify-center">
-        <div className="mt-8">
+    <div className="h-screen w-full max-w-2xl sm:max-w-3xl md:max-w-4xl flex flex-col p-0 sm:p-4 bg-slate-400 sm:flex-row sm:h-[75vh] sm:max-h-[600px] sm:rounded-xl">
+      <div className="min-h-52 sm:min-w-56 bg-violet-600 bg-[url(/images/bg-sidebar-mobile.svg)] bg-cover bg-center sm:bg-[url(/images/bg-sidebar-desktop.svg)] flex items-start justify-center sm:justify-start rounded-xl ">
+        <div className="mt-8 mx-6">
           <StepIndicator currentStep={currentStep} />
         </div>
       </div>
@@ -115,7 +115,7 @@ const MultiStepForm = () => {
         className="flex flex-col flex-1 bg-magnolia relative"
       >
         <div className="flex-1">
-          <Card className="min-h-[300px] w-[92%] mx-auto relative -top-[88px] py-2">
+          <Card className="min-h-[300px] w-[92%] sm:w-full mx-auto relative -top-[88px] py-2 sm:top-0 sm:rounded-none sm:shadow-none  sm:px-2 md:px-8">
             {isSubmitted ? (
               <CardContent>
                 <Confirmation />
@@ -123,7 +123,7 @@ const MultiStepForm = () => {
             ) : (
               <>
                 <CardHeader>
-                  <CardTitle className="text-2xl">
+                  <CardTitle className="text-2xl sm:text-3xl">
                     {pageInfo[currentStep - 1].title}
                   </CardTitle>
                   <CardDescription className="text-base text-cool-gray">
@@ -159,7 +159,7 @@ const MultiStepForm = () => {
           </Card>
         </div>
         {!isSubmitted && (
-          <div className="flex justify-between bg-white p-6 absolute bottom-0 w-full">
+          <div className="flex justify-between bg-white p-6 absolute sm:relative sm:mt-6 bottom-0 w-full">
             {currentStep !== 1 && (
               <Button
                 type="button"
@@ -174,7 +174,9 @@ const MultiStepForm = () => {
               type="submit"
               size={"lg"}
               className={`ml-auto ${
-                currentStep === 4 ? "bg-purplish-blue" : ""
+                currentStep === 4
+                  ? "bg-purplish-blue  hover:bg-purplish-blue"
+                  : ""
               }`}
             >
               {currentStep === 4 ? "Confirm" : "Next Step"}
