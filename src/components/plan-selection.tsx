@@ -40,13 +40,14 @@ const PlanSelection = ({ formData, updateFormData }: PlanSelectionProps) => {
         onValueChange={(value: "arcade" | "advanced" | "pro") =>
           updateFormData({ plan: value })
         }
+        className="sm:flex sm:justify-center items-center sm:gap-4"
       >
         {plans.map((plan) => (
           <div key={plan.id} className="">
             <RadioGroupItem value={plan.id} id={plan.id} className="sr-only" />
             <Label
               htmlFor={plan.id}
-              className={`flex items-start gap-4 border  p-4 rounded-lg ${
+              className={`flex items-start gap-4 sm:gap-12 sm:flex-col sm:min-w-[150px] border  p-4 rounded-lg ${
                 formData.plan === plan.id
                   ? "bg-magnolia border-purplish-blue"
                   : "bg-white border-gray-300"

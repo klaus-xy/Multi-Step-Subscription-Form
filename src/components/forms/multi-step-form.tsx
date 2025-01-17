@@ -22,7 +22,7 @@ const pageInfo = [
     description: "Please provide your name, email address, and phone number.",
   },
   {
-    title: "Plan Selection",
+    title: "Select Your Plan ",
     description: "You have the option of monthly or yearly billing.",
   },
   {
@@ -103,8 +103,8 @@ const MultiStepForm = () => {
   };
 
   return (
-    <div className="h-screen w-full max-w-2xl sm:max-w-3xl md:max-w-4xl flex flex-col p-0 sm:p-4 bg-slate-400 sm:flex-row sm:h-[75vh] sm:max-h-[600px] sm:rounded-xl">
-      <div className="min-h-52 sm:min-w-56 bg-violet-600 bg-[url(/images/bg-sidebar-mobile.svg)] bg-cover bg-center sm:bg-[url(/images/bg-sidebar-desktop.svg)] flex items-start justify-center sm:justify-start rounded-xl ">
+    <div className="h-screen w-full max-w-2xl sm:max-w-3xl md:max-w-4xl flex flex-col p-0 sm:p-4 bg-white sm:flex-row sm:h-[75vh] sm:max-h-[600px] sm:rounded-xl">
+      <div className="min-h-52 sm:min-w-56 bg-violet-600 bg-[url(/images/bg-sidebar-mobile.svg)] bg-cover bg-center sm:bg-[url(/images/bg-sidebar-desktop.svg)] flex items-start justify-center sm:justify-start sm:rounded-xl ">
         <div className="mt-8 mx-6">
           <StepIndicator currentStep={currentStep} />
         </div>
@@ -112,10 +112,10 @@ const MultiStepForm = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col flex-1 bg-magnolia relative"
+        className="flex flex-col flex-1 bg-magnolia sm:bg-white relative"
       >
         <div className="flex-1">
-          <Card className="min-h-[300px] w-[92%] sm:w-full mx-auto relative -top-[88px] py-2 sm:top-0 sm:rounded-none sm:shadow-none  sm:px-2 md:px-8">
+          <Card className="min-h-[300px] w-[92%] sm:w-full mx-auto relative -top-[88px] py-2 sm:top-0 sm:rounded-none sm:border-none sm:shadow-none  sm:px-2 md:px-8">
             {isSubmitted ? (
               <CardContent>
                 <Confirmation />
